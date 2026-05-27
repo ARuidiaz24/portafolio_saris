@@ -1,5 +1,3 @@
-"use client";
-
 import { useState } from "react";
 import Head from "next/head";
 import Image from "next/image";
@@ -9,7 +7,14 @@ import { Geist, Geist_Mono } from "next/font/google";
 import ImageGallery from 'react-image-gallery';
 import "react-image-gallery/styles/css/image-gallery.css";
 
-import ParticlesBackground from "../components/ParticlesBackground";
+// 1. Importamos dynamic de Next.js
+import dynamic from "next/dynamic";
+
+// 2. Cargamos el componente de forma dinámica desactivando SSR (Server-Side Rendering)
+const ParticlesBackground = dynamic(
+  () => import("../components/ParticlesBackground"),
+  { ssr: false }
+);
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -50,17 +55,9 @@ export default function Home() {
   const images25 = [{ original: "https://i.ibb.co/3mjBK6gV/AVON-C182542-2.jpg" }];
   const images26 = [{ original: "https://i.ibb.co/prJqJ3G7/2G5A7994.jpg" }];
 
-  const video1 = [
-    { id: "1qFpOR7BTDeOZwuQV30RWhx12vreIxbEJ" }
-  ];
-
-  const video2 = [
-    { id: "1inibBsj87We5Sf0-71bmAoQCBR1Hslq1" }
-  ];
-
-  const video3 = [
-    { id: "1Y0nUpQRmKfNQMotxm9JSWDu8_2PiMozP" }
-  ];
+  const video1 = [{ id: "1qFpOR7BTDeOZwuQV30RWhx12vreIxbEJ" }];
+  const video2 = [{ id: "1inibBsj87We5Sf0-71bmAoQCBR1Hslq1" }];
+  const video3 = [{ id: "1Y0nUpQRmKfNQMotxm9JSWDu8_2PiMozP" }];
 
   return (
     <>
@@ -125,7 +122,6 @@ export default function Home() {
                       <ImageGallery items={images1} showPlayButton={false} showFullscreenButton={true} />
                       <ImageGallery items={images2} showPlayButton={false} showFullscreenButton={true} />
                       <ImageGallery items={images21} showPlayButton={false} showFullscreenButton={true} />
-
                     </div>
                   </section>
                   <section className={styles.gallery}>
@@ -180,10 +176,9 @@ export default function Home() {
                   <h2 className={`${styles.title_H2}`}>Galería de Videos</h2>
                   <section className={styles.gallery}>
                     <div className={styles.videoGrid}>
-
                       {video1.map((video, index) => (
                         <div key={index} className={styles.videoContainer}>
-                          <div className={styles.videoWrapper}> {/* <-- AGREGADO */}
+                          <div className={styles.videoWrapper}>
                             <iframe
                               src={`https://drive.google.com/file/d/${video.id}/preview`}
                               allow="autoplay"
@@ -195,7 +190,7 @@ export default function Home() {
 
                       {video2.map((video, index) => (
                         <div key={index} className={styles.videoContainer}>
-                          <div className={styles.videoWrapper}> {/* <-- AGREGADO */}
+                          <div className={styles.videoWrapper}>
                             <iframe
                               src={`https://drive.google.com/file/d/${video.id}/preview`}
                               allow="autoplay"
@@ -207,7 +202,7 @@ export default function Home() {
 
                       {video3.map((video, index) => (
                         <div key={index} className={styles.videoContainer}>
-                          <div className={styles.videoWrapper}> {/* <-- AGREGADO */}
+                          <div className={styles.videoWrapper}>
                             <iframe
                               src={`https://drive.google.com/file/d/${video.id}/preview`}
                               allow="autoplay"
@@ -216,10 +211,8 @@ export default function Home() {
                           </div>
                         </div>
                       ))}
-
                     </div>
                   </section>
-
                 </main>
               </div>
             )}
