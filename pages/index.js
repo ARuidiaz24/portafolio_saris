@@ -9,7 +9,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import ImageGallery from 'react-image-gallery';
 import "react-image-gallery/styles/css/image-gallery.css";
 
-import ParticlesBackground from "@/components/ParticlesBackground";
+import ParticlesBackground from "../components/ParticlesBackground";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
