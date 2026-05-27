@@ -10,7 +10,7 @@ import "react-image-gallery/styles/css/image-gallery.css";
 import dynamic from "next/dynamic";
 
 const ParticlesBackground = dynamic(
-  () => import("../components/ParticlesBackground"),
+  () => import("../components/particlesBackground"),
   { ssr: false }
 );
 
