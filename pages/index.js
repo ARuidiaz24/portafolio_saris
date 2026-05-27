@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react"; // <-- Agregamos useEffect
 import Head from "next/head";
 import Image from "next/image";
 import styles from "@/styles/Home.module.css";
@@ -7,10 +7,8 @@ import { Geist, Geist_Mono } from "next/font/google";
 import ImageGallery from 'react-image-gallery';
 import "react-image-gallery/styles/css/image-gallery.css";
 
-// 1. Importamos dynamic de Next.js
 import dynamic from "next/dynamic";
 
-// 2. Cargamos el componente de forma dinámica desactivando SSR (Server-Side Rendering)
 const ParticlesBackground = dynamic(
   () => import("../components/ParticlesBackground"),
   { ssr: false }
@@ -28,6 +26,13 @@ const geistMono = Geist_Mono({
 
 export default function Home() {
   const [activeTab, setActiveTab] = useState("fotos");
+  // Estado para asegurarnos de que el componente ya se montó en el navegador
+  const [isMounted, setIsMounted] = useState(false);
+
+  // Se ejecuta solo una vez cuando el usuario abre la página en su navegador
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
 
   const images1 = [{ original: "https://i.ibb.co/STFvCdb/Avon8502-2.jpg" }, { original: "https://i.ibb.co/ycBxhmST/Avon8502.jpg" }];
   const images2 = [{ original: "https://i.ibb.co/fYH10xgJ/Color-Trend1253.jpg" }, { original: "https://i.ibb.co/ynX9TngR/Color-Trend1253-2.jpg" }];
@@ -170,7 +175,8 @@ export default function Home() {
               </div>
             )}
 
-            {activeTab === "videos" && (
+            {/* Agregamos la condición para que los iframes no carguen durante el build en el servidor */}
+            {activeTab === "videos" && isMounted && (
               <div className={`${styles.pageGarelly} ${styles.videoGallery}`}>
                 <main className={`${styles.main} relative z-10`}>
                   <h2 className={`${styles.title_H2}`}>Galería de Videos</h2>
